@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Efecto push para los botones */
+.btn-push {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-push:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 3px 5px rgba(0,0,0,0.3);
+}
+
+/* Botones circulares estilo iPhone */
+.btn-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 4px;
+}
+
+/* Botón redondeado (0 y =) */
+.btn-rounded-rect {
+  width: 140px;
+  height: 68px;
+  border-radius: 35px;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 4px;
+}
