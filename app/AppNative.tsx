@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+
+
+// Función principal de la aplicación
+// Maneja el estado de la calculadora, incluyendo el display, números previos, operadores y modo oscuro
+// Permite realizar cálculos básicos y manejar errores como división por cero
+// Utiliza estilos personalizados para una mejor experiencia de usuario
+// Importa componentes de React Native y estilos personalizados
 export default function App() {
   const [display, setDisplay] = useState("0");
   const [previous, setPrevious] = useState(null);
@@ -10,13 +17,24 @@ export default function App() {
   const [errorTimeout, setErrorTimeout] = useState(null);
   const [isError, setIsError] = useState(false);
 
+  // Formatea el número, mostrando enteros sin decimales y floats con 3 decimales
+  // Si el número es entero, lo devuelve como string sin decimales
+  // Si es float, lo redondea a 3 decimales y lo devuelve como string
   const formateaNumero = (num) => {
     const parsed = parseFloat(num);
     return Number.isInteger(parsed) ? String(parsed) : parsed.toFixed(3);
   };
 
+  // Convierte el display a número, devolviendo 0 si no es un número válido
   const parseDisplay = () => parseFloat(display) || 0;
 
+  // Maneja la entrada de dígitos
+  // Si se está esperando el siguiente número, reinicia el display
+  // Si hay un error, reinicia el display
+  // Si el display es "0", reemplaza con el nuevo dígito
+  // Si no, concatena el dígito al display actual
+  // Si el display es un número válido, lo convierte a string
+  // Si no, muestra "0"
   const inputDigito = (digito) => {
     if (waitingForNext) {
       setDisplay(String(digito));
@@ -32,6 +50,10 @@ export default function App() {
     }
   };
 
+  // Limpia todos los valores
+  // Resetea el display, número previo, operador y estado de espera
+  // Resetea el estado de error
+  
   const clearAll = () => {
     setDisplay("0");
     setPrevious(null);
@@ -40,16 +62,23 @@ export default function App() {
     setIsError(false);
   };
 
+  // Elimina el último dígito del display
+  // Si el display tiene más de un dígito, elimina el último
+  // Si no, resetea a "0"
   const backspace = () => {
     if (!isError) {
       setDisplay((d) => (d.length > 1 ? d.slice(0, -1) : "0"));
     }
   };
 
-  const calcula = (a, operador, b) => {
+  // Realiza el cálculo basado en el operator y los números previos
+  // Si el divisor es 0, muestra un error y resetea después de 2 segundos
+  // Devuelve null si hay un error
+  // Devuelve el resultado del cálculo
+  const calcula = (a, operator, b) => {
     a = parseFloat(a);
     b = parseFloat(b);
-    switch (operador) {
+    switch (operator) {
       case "+": return a + b;
       case "-": return a - b;
       case "*": return a * b;
@@ -70,6 +99,12 @@ export default function App() {
     }
   };
 
+  // Maneja el operador seleccionado
+  // Si no hay operador previo, lo establece
+  // Si ya hay un operador, calcula el resultado con el operador previo y el número actual
+  // Si el resultado es válido, lo muestra en el display
+  // Establece el nuevo operador y espera el siguiente número
+  // Esta función se usa al presionar los botones de los operadores (+, -, *, /)
   const manejaOperador = (nextOp) => {
     const current = parseDisplay();
     if (previous == null) {
@@ -81,8 +116,8 @@ export default function App() {
         setDisplay(formateaNumero(resultado));
       }
     }
-    setOperator(nextOp);
-    setWaitingForNext(true);
+    setOperator(nextOp);// Establece el nuevo operador
+    setWaitingForNext(true);// Espera el siguiente número
   };
 // ✅ Función para manejar el botón "="
 // ✅ Si hay un operador y un número previo, realiza el cálculo
@@ -104,7 +139,11 @@ export default function App() {
     }
   };
 
-  const toggleTheme = () => setDarkMode(!darkMode);
+  // Alterna entre modo oscuro y claro
+  // Cambia el estado de darkMode
+  // Actualiza el estilo del contenedor principal
+  // Permite al usuario cambiar entre temas
+  const modoOscuro = () => setDarkMode(!darkMode);
 
   const renderBoton = (label, bgColor, textColor, onPress, flex = 1) => (
     <TouchableOpacity
@@ -117,7 +156,7 @@ export default function App() {
 
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? "#1c1c1c" : "#f0f0f0" }]}>
-      <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+      <TouchableOpacity style={styles.themeButton} onPress={modoOscuro}>
         <Text style={styles.themeButtonText}>
           {darkMode ? "Modo Luz" : "Modo Oscuro"}
         </Text>
@@ -160,7 +199,7 @@ export default function App() {
         {renderBoton("1", "#333333", "white", () => inputDigito(1))}
         {renderBoton("2", "#333333", "white", () => inputDigito(2))}
         {renderBoton("3", "#333333", "white", () => inputDigito(3))}
-        {renderBoton("+", "#F89B10", "white", () => handleOperator("+"))}
+        {renderBoton("+", "#F89B10", "white", () => manejaOperador("+"))}
       </View>
 
       <View style={styles.row}>
@@ -169,7 +208,15 @@ export default function App() {
       </View>
     </View>
   );
-}
+}//termina App
+
+// Estilos para la calculadora
+// ✅ Estilos para el contenedor principal
+// ✅ Estilos para el display de la calculadora
+// ✅ Estilos para los botones, incluyendo colores y tamaños
+// ✅ Estilos para el botón de tema oscuro/claro
+// ✅ Asegura que los estilos se apliquen correctamente en modo oscuro y claro
+// ✅ Utiliza flexbox para el diseño responsivo
 
 const styles = StyleSheet.create({
   container: {

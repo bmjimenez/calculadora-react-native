@@ -21,6 +21,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   margin: 4px;
+  border: 2px solid black;
 }
 
 /* Botón redondeado (0 y =) */
@@ -31,4 +32,38 @@ body {
   font-size: 24px;
   font-weight: bold;
   margin: 4px;
+  border: 2px solid black;
+}
+
+.calc-container {
+  border: 5px solid black;
+  border-radius: 5px;
+  padding: 1rem; /* equivale a p-3 de Bootstrap */
+}
+
+.bg-dark-mode {
+  background-color: #1c1c1c;
+  color: white;
+}
+
+.bg-light-mode {
+  background-color: #f0f0f0;
+  color: black;
+}
+.calc-display {
+  height: 140px;
+  background-color: #a5a5a5;
+  color: white;
+  font-size: 48px;
+  vertical-align: bottom;
+  text-align: right;
+  padding-right: 20px;
+  border: 2px solid black;
+  border-radius: 2px;
+  overflow: hidden; /* evita que el texto se desborde */
+  white-space: nowrap; /* evita salto de línea */
+}
+.calc-display.error {
+  color: red;
+  font-size: 28px; /* texto más pequeño si es error */
 }

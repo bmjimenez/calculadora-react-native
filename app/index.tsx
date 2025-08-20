@@ -1,5 +1,5 @@
-import HomeScreenNative from './HomeScreenNative';
+import HomeScreenWeb from './HomeScreenWeb';
 
 export default function Index() {
-  return <HomeScreenNative />;
+  return <HomeScreenWeb/>;
 }
